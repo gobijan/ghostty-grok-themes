@@ -10,6 +10,16 @@ Terminal and editor themes based on **[Grok Build](https://github.com/xai-org/gr
 | **GrokDay** | Light | `#f5f5f5` | Purple `#7d4bc6` |
 | **Tokyo Night** | Dark | (syntax only) | Upstream tmTheme |
 
+### Previews
+
+**GrokNight** (dark)
+
+![GrokNight dark theme](screenshots/dark.png)
+
+**GrokDay** (light)
+
+![GrokDay light theme](screenshots/light.png)
+
 **Upstream source of truth**
 
 - TUI palettes: [`grokday.rs`](https://github.com/xai-org/grok-build/blob/main/crates/codegen/xai-grok-pager-render/src/theme/grokday.rs) · [`groknight.rs`](https://github.com/xai-org/grok-build/blob/main/crates/codegen/xai-grok-pager-render/src/theme/groknight.rs)
@@ -25,6 +35,7 @@ This repo **syncs** the official `.tmTheme` files and ships **ports** for Ghostt
 ghostty/          GrokDay, GrokNight          → Ghostty terminal
 helix/            grok-day.toml, grok-night.toml
 sublime/          *.tmTheme (synced from upstream)
+screenshots/      dark.png, light.png
 scripts/sync-upstream.sh
 install.sh
 NOTICE            Apache attribution
