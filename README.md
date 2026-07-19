@@ -1,4 +1,6 @@
-# Grok themes for Ghostty, Helix & Sublime Text
+# Grok Themes
+
+Themes for Ghostty, Helix & Sublime Text
 
 Terminal and editor themes based on **[Grok Build](https://github.com/xai-org/grok-build)** (open source, Apache-2.0).
 
@@ -35,26 +37,26 @@ NOTICE            Apache attribution
 ### Clone (recommended — easy updates)
 
 ```bash
-git clone https://github.com/gobijan/ghostty-grok-themes.git ~/src/ghostty-grok-themes
-~/src/ghostty-grok-themes/install.sh          # Ghostty + Helix + Sublime
+git clone https://github.com/gobijan/grok-themes.git ~/src/grok-themes
+~/src/grok-themes/install.sh          # Ghostty + Helix + Sublime
 # or:
-~/src/ghostty-grok-themes/install.sh ghostty
-~/src/ghostty-grok-themes/install.sh helix
-~/src/ghostty-grok-themes/install.sh sublime
+~/src/grok-themes/install.sh ghostty
+~/src/grok-themes/install.sh helix
+~/src/grok-themes/install.sh sublime
 ```
 
 ### One-liner (no clone)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/gobijan/ghostty-grok-themes/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/gobijan/grok-themes/main/install.sh | bash
 # specific target:
-curl -fsSL https://raw.githubusercontent.com/gobijan/ghostty-grok-themes/main/install.sh | bash -s -- helix
+curl -fsSL https://raw.githubusercontent.com/gobijan/grok-themes/main/install.sh | bash -s -- helix
 ```
 
 ### Update later
 
 ```bash
-cd ~/src/ghostty-grok-themes
+cd ~/src/grok-themes
 git pull
 ./scripts/sync-upstream.sh   # refresh Sublime tmThemes from xai-org/grok-build
 ./install.sh

@@ -9,11 +9,11 @@
 #   ./install.sh all
 #
 # One-liner (after repo is on GitHub):
-#   curl -fsSL https://raw.githubusercontent.com/gobijan/ghostty-grok-themes/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/gobijan/grok-themes/main/install.sh | bash
 
 set -euo pipefail
 
-REPO_RAW_BASE="${GROK_THEMES_RAW_BASE:-https://raw.githubusercontent.com/gobijan/ghostty-grok-themes/main}"
+REPO_RAW_BASE="${GROK_THEMES_RAW_BASE:-https://raw.githubusercontent.com/gobijan/grok-themes/main}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" 2>/dev/null && pwd || true)"
 TARGET="${1:-all}"
 
