@@ -15,8 +15,6 @@ GrokDay sets ANSI white / bright-white to dark readable grays so tools that colo
 
 ### One-liner (no clone)
 
-Replace `OWNER` with the GitHub user/org that hosts this repo:
-
 ```bash
 curl -fsSL https://raw.githubusercontent.com/gobijan/ghostty-grok-themes/main/install.sh | bash
 ```
