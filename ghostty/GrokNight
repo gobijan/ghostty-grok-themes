@@ -1,6 +1,8 @@
-# GrokNight — Grok Build default dark theme
-# Neutral dark base with magenta accent (from grok TUI palette)
-# Source: embedded GrokNight colors in grok 0.2.101
+# GrokNight — Ghostty terminal theme (dark)
+#
+# Colors from xai-org/grok-build (Apache-2.0):
+#   crates/codegen/xai-grok-pager-render/src/theme/groknight.rs
+# Accents are Tokyo Night family; base is neutral gray.
 
 palette = 0=#111111
 palette = 1=#f7768e

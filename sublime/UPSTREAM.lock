@@ -1,0 +1,8 @@
+ref=main
+synced_at=2026-07-19T10:15:31Z
+source=https://github.com/xai-org/grok-build/tree/main/crates/codegen/xai-grok-pager-render/assets
+
+# sha256
+87e077da64beadc40568aff251d6789c7eb4e669cd0ab0f9bd25dd0248f3ecb5  grok-day.tmTheme
+16f9b13c7323e0a6056f1d45a648fab0ff98d1f35bde5618082c7a06d9f7cb70  grok-night.tmTheme
+6713e3ab9dab57033b806be71122a640e745e5c66fb1445b20909374f7e48c7f  tokyo-night.tmTheme

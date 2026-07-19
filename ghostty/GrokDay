@@ -1,10 +1,11 @@
-# GrokDay — Grok Build light theme
-# Bright terminal background with purple accent (from grok TUI palette)
-# Source: embedded GrokDay colors in grok 0.2.101
+# GrokDay — Ghostty terminal theme (light)
 #
-# Note: on light themes, ANSI white (7) and bright white (15) must stay dark
-# enough to read as text. Tools like bat --theme=base16 color braces, colons,
-# and operators with white; matching the background makes them invisible.
+# Colors from xai-org/grok-build (Apache-2.0):
+#   crates/codegen/xai-grok-pager-render/src/theme/grokday.rs
+#
+# ANSI white (7) and bright white (15) are dark grays so tools that paint
+# braces/punctuation with "white" (e.g. bat --theme=base16) stay readable
+# on a light background.
 
 palette = 0=#262626
 palette = 1=#cd3048

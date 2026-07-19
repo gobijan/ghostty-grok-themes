@@ -1,134 +1,138 @@
-# Ghostty Grok Themes
+# Grok themes for Ghostty, Helix & Sublime Text
 
-**GrokDay** and **GrokNight** — terminal color themes matching [Grok Build](https://grok.x.ai/) TUI palettes, for [Ghostty](https://ghostty.org/).
+Terminal and editor themes based on **[Grok Build](https://github.com/xai-org/grok-build)** (open source, Apache-2.0).
 
 | Theme | Mode | Background | Accent |
 |-------|------|------------|--------|
 | **GrokNight** | Dark | `#0a0a0a` | Magenta `#bb9af7` |
 | **GrokDay** | Light | `#f5f5f5` | Purple `#7d4bc6` |
+| **Tokyo Night** | Dark | (syntax only) | Upstream tmTheme |
 
-GrokDay sets ANSI white / bright-white to dark readable grays so tools that color braces and punctuation with “white” (e.g. `bat --theme=base16`, many `rustc`/`cargo` paths) stay visible on a light background.
+**Upstream source of truth**
+
+- TUI palettes: [`grokday.rs`](https://github.com/xai-org/grok-build/blob/main/crates/codegen/xai-grok-pager-render/src/theme/grokday.rs) · [`groknight.rs`](https://github.com/xai-org/grok-build/blob/main/crates/codegen/xai-grok-pager-render/src/theme/groknight.rs)
+- TextMate / Sublime syntax themes: [`pager-render/assets`](https://github.com/xai-org/grok-build/tree/main/crates/codegen/xai-grok-pager-render/assets)
+
+This repo **syncs** the official `.tmTheme` files and ships **ports** for Ghostty (16-color ANSI) and Helix (tree-sitter + UI).
+
+---
+
+## Layout
+
+```text
+ghostty/          GrokDay, GrokNight          → Ghostty terminal
+helix/            grok-day.toml, grok-night.toml
+sublime/          *.tmTheme (synced from upstream)
+scripts/sync-upstream.sh
+install.sh
+NOTICE            Apache attribution
+```
 
 ---
 
 ## Quick install (copy-paste)
 
+### Clone (recommended — easy updates)
+
+```bash
+git clone https://github.com/gobijan/ghostty-grok-themes.git ~/src/ghostty-grok-themes
+~/src/ghostty-grok-themes/install.sh          # Ghostty + Helix + Sublime
+# or:
+~/src/ghostty-grok-themes/install.sh ghostty
+~/src/ghostty-grok-themes/install.sh helix
+~/src/ghostty-grok-themes/install.sh sublime
+```
+
 ### One-liner (no clone)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/gobijan/ghostty-grok-themes/main/install.sh | bash
+# specific target:
+curl -fsSL https://raw.githubusercontent.com/gobijan/ghostty-grok-themes/main/install.sh | bash -s -- helix
 ```
 
-### Clone + install (best for updates)
+### Update later
 
 ```bash
-git clone https://github.com/gobijan/ghostty-grok-themes.git ~/src/ghostty-grok-themes
-~/src/ghostty-grok-themes/install.sh
-```
-
-### Manual copy
-
-```bash
-# XDG (Linux + macOS)
-mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes"
-curl -fsSL -o "${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes/GrokDay" \
-  https://raw.githubusercontent.com/gobijan/ghostty-grok-themes/main/themes/GrokDay
-curl -fsSL -o "${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes/GrokNight" \
-  https://raw.githubusercontent.com/gobijan/ghostty-grok-themes/main/themes/GrokNight
-
-# Also on macOS (optional but recommended if you keep config under Application Support)
-mkdir -p "$HOME/Library/Application Support/com.mitchellh.ghostty/themes"
-cp "${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes/GrokDay" \
-   "$HOME/Library/Application Support/com.mitchellh.ghostty/themes/"
-cp "${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes/GrokNight" \
-   "$HOME/Library/Application Support/com.mitchellh.ghostty/themes/"
+cd ~/src/ghostty-grok-themes
+git pull
+./scripts/sync-upstream.sh   # refresh Sublime tmThemes from xai-org/grok-build
+./install.sh
 ```
 
 ---
 
-## Enable the themes
+## Enable
 
-Edit your Ghostty config and set:
+### Ghostty
 
 ```ini
 theme = light:GrokDay,dark:GrokNight
 ```
 
-Ghostty will follow system light/dark appearance.
-
-**Single theme only:**
-
-```ini
-theme = GrokNight
-# theme = GrokDay
-```
-
-**Config file locations**
-
-| OS | Path |
-|----|------|
+| OS | Config |
+|----|--------|
 | macOS | `~/Library/Application Support/com.mitchellh.ghostty/config` |
 | Linux | `~/.config/ghostty/config` |
 
-Reload: **Cmd+Shift+,** (macOS) / your Ghostty “reload config” binding, or open a new window.
+Reload with **Cmd+Shift+,** or a new window. Check: `ghostty +list-themes | grep -i grok`
 
-Verify:
+**GrokDay note:** ANSI white (`palette 7` / `15`) is mapped to dark grays so tools that color braces with “white” (e.g. `bat --theme=base16`) stay visible on the light background.
 
-```bash
-ghostty +list-themes | grep -i grok
+### Helix
+
+```toml
+# ~/.config/helix/config.toml
+theme = "grok-night"
+# theme = "grok-day"
 ```
+
+Or `:theme grok-night` / `:theme grok-day` interactively.
+
+### Sublime Text
+
+After install, **Preferences → Select Color Scheme** → `grok-night`, `grok-day`, or `tokyo-night`.
+
+Or in `Preferences.sublime-settings`:
+
+```json
+{
+  "color_scheme": "Packages/User/grok-night.tmTheme"
+}
+```
+
+Files land in:
+
+| OS | Path |
+|----|------|
+| macOS | `~/Library/Application Support/Sublime Text/Packages/User/` |
+| Linux | `~/.config/sublime-text/Packages/User/` |
 
 ---
 
-## Update on other machines
-
-If you installed via clone:
+## Sync official tmThemes from Grok Build
 
 ```bash
-cd ~/src/ghostty-grok-themes
-git pull
-./install.sh
+./scripts/sync-upstream.sh
+# pin a commit/tag:
+GROK_BUILD_REF=main ./scripts/sync-upstream.sh
 ```
 
-If you used the one-liner, run it again — it overwrites the theme files in place:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/gobijan/ghostty-grok-themes/main/install.sh | bash
-```
+Writes `sublime/*.tmTheme` + `sublime/UPSTREAM.lock` (ref + sha256).  
+Ghostty and Helix ports are **not** auto-overwritten (they are hand-mapped derivatives).
 
 ---
 
-## Sync strategy
+## Multi-machine
 
-Recommended layout for multi-machine setups:
-
-1. Clone this repo on each machine (or once into a synced dotfiles tree).
+1. Clone this repo on each machine (or into your dotfiles).
 2. Run `./install.sh` after `git pull`.
-3. Keep only `theme = light:GrokDay,dark:GrokNight` in your Ghostty `config` (dotfiles or manual).
-
-Theme files are plain text; versioning lives in this git repo.
-
----
-
-## Files
-
-```text
-themes/GrokDay      # light
-themes/GrokNight    # dark
-install.sh          # installs into Ghostty theme dirs
-```
-
-Ghostty looks up themes by name under:
-
-1. `${XDG_CONFIG_HOME:-~/.config}/ghostty/themes`
-2. Ghostty’s prefix `share/ghostty/themes` (built-ins)
-
-On macOS the installer also copies into  
-`~/Library/Application Support/com.mitchellh.ghostty/themes`.
+3. Keep only the `theme = …` / Helix `theme =` / Sublime `color_scheme` lines in your personal configs.
 
 ---
 
 ## License
 
-Colors are derived from Grok Build TUI palettes for personal/terminal theming.  
-This repo’s theme files and installer are provided as-is under [MIT](LICENSE).
+Apache License 2.0. Color palettes and `.tmTheme` files originate from
+[xai-org/grok-build](https://github.com/xai-org/grok-build) (Copyright SpaceXAI).
+See [NOTICE](NOTICE) and [LICENSE](LICENSE).

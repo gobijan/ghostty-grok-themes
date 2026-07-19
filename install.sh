@@ -1,57 +1,130 @@
 #!/usr/bin/env bash
-# Install GrokDay + GrokNight Ghostty themes.
+# Install Grok themes for Ghostty, Helix, and/or Sublime Text.
+#
 # Usage:
+#   ./install.sh              # all targets found / all
+#   ./install.sh ghostty
+#   ./install.sh helix
+#   ./install.sh sublime
+#   ./install.sh all
+#
+# One-liner (after repo is on GitHub):
 #   curl -fsSL https://raw.githubusercontent.com/gobijan/ghostty-grok-themes/main/install.sh | bash
-#   # or from a clone:
-#   ./install.sh
 
 set -euo pipefail
 
-REPO_RAW_BASE="${GROK_GHOSTTY_RAW_BASE:-https://raw.githubusercontent.com/gobijan/ghostty-grok-themes/main}"
+REPO_RAW_BASE="${GROK_THEMES_RAW_BASE:-https://raw.githubusercontent.com/gobijan/ghostty-grok-themes/main}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" 2>/dev/null && pwd || true)"
+TARGET="${1:-all}"
 
-# Resolve theme sources: local clone wins, otherwise download from GitHub.
-if [[ -f "${SCRIPT_DIR}/themes/GrokDay" && -f "${SCRIPT_DIR}/themes/GrokNight" ]]; then
-  SRC_DAY="${SCRIPT_DIR}/themes/GrokDay"
-  SRC_NIGHT="${SCRIPT_DIR}/themes/GrokNight"
-  MODE="local"
-else
-  TMP="$(mktemp -d)"
-  trap 'rm -rf "$TMP"' EXIT
-  curl -fsSL "${REPO_RAW_BASE}/themes/GrokDay" -o "${TMP}/GrokDay"
-  curl -fsSL "${REPO_RAW_BASE}/themes/GrokNight" -o "${TMP}/GrokNight"
-  SRC_DAY="${TMP}/GrokDay"
-  SRC_NIGHT="${TMP}/GrokNight"
-  MODE="remote"
-fi
-
-install_into() {
-  local dest="$1"
-  mkdir -p "$dest"
-  cp "$SRC_DAY" "$dest/GrokDay"
-  cp "$SRC_NIGHT" "$dest/GrokNight"
-  echo "  → $dest"
+have_local() {
+  [[ -d "${SCRIPT_DIR}/ghostty" && -d "${SCRIPT_DIR}/helix" && -d "${SCRIPT_DIR}/sublime" ]]
 }
 
-echo "Installing Grok Ghostty themes ($MODE)…"
+fetch_file() {
+  local rel="$1" dest="$2"
+  if have_local && [[ -f "${SCRIPT_DIR}/${rel}" ]]; then
+    cp "${SCRIPT_DIR}/${rel}" "$dest"
+  else
+    curl -fsSL "${REPO_RAW_BASE}/${rel}" -o "$dest"
+  fi
+}
 
-# XDG path (Linux + macOS; Ghostty looks here by name)
-XDG_THEMES="${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes"
-install_into "$XDG_THEMES"
+install_ghostty() {
+  echo "→ Ghostty"
+  local dirs=()
+  dirs+=("${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/themes")
+  if [[ "$(uname -s)" == "Darwin" ]]; then
+    dirs+=("$HOME/Library/Application Support/com.mitchellh.ghostty/themes")
+  fi
+  for d in "${dirs[@]}"; do
+    mkdir -p "$d"
+    fetch_file ghostty/GrokDay "$d/GrokDay"
+    fetch_file ghostty/GrokNight "$d/GrokNight"
+    echo "    $d"
+  done
+  echo
+  echo "  Config (add to Ghostty config):"
+  echo "    theme = light:GrokDay,dark:GrokNight"
+  echo "  macOS config: ~/Library/Application Support/com.mitchellh.ghostty/config"
+  echo "  Linux config: \${XDG_CONFIG_HOME:-~/.config}/ghostty/config"
+  echo "  Reload: Cmd+Shift+, (macOS) or open a new window"
+}
 
-# macOS Application Support path (where many mac configs live)
-if [[ "$(uname -s)" == "Darwin" ]]; then
-  MACOS_THEMES="$HOME/Library/Application Support/com.mitchellh.ghostty/themes"
-  install_into "$MACOS_THEMES"
-fi
+install_helix() {
+  echo "→ Helix"
+  local d="${XDG_CONFIG_HOME:-$HOME/.config}/helix/themes"
+  mkdir -p "$d"
+  fetch_file helix/grok-day.toml "$d/grok-day.toml"
+  fetch_file helix/grok-night.toml "$d/grok-night.toml"
+  echo "    $d"
+  echo
+  echo "  Enable:"
+  echo "    :theme grok-night"
+  echo "    :theme grok-day"
+  echo "  Or in ~/.config/helix/config.toml:"
+  echo "    theme = \"grok-night\""
+}
+
+install_sublime() {
+  echo "→ Sublime Text"
+  local candidates=()
+  if [[ "$(uname -s)" == "Darwin" ]]; then
+    candidates+=(
+      "$HOME/Library/Application Support/Sublime Text/Packages/User"
+      "$HOME/Library/Application Support/Sublime Text 3/Packages/User"
+    )
+  else
+    candidates+=(
+      "${XDG_CONFIG_HOME:-$HOME/.config}/sublime-text/Packages/User"
+      "$HOME/.config/sublime-text-3/Packages/User"
+    )
+  fi
+
+  local dest=""
+  for c in "${candidates[@]}"; do
+    if [[ -d "$(dirname "$c")" ]] || [[ -d "$c" ]]; then
+      dest="$c"
+      break
+    fi
+  done
+  if [[ -z "$dest" ]]; then
+    dest="${candidates[0]}"
+  fi
+
+  mkdir -p "$dest"
+  fetch_file sublime/grok-day.tmTheme "$dest/grok-day.tmTheme"
+  fetch_file sublime/grok-night.tmTheme "$dest/grok-night.tmTheme"
+  fetch_file sublime/tokyo-night.tmTheme "$dest/tokyo-night.tmTheme"
+  echo "    $dest"
+  echo
+  echo "  Enable: Preferences → Select Color Scheme →"
+  echo "    grok-night  |  grok-day  |  tokyo-night"
+  echo "  Or in Preferences.sublime-settings:"
+  echo "    \"color_scheme\": \"Packages/User/grok-night.tmTheme\""
+}
+
+case "$TARGET" in
+  all|"")
+    install_ghostty
+    echo
+    install_helix
+    echo
+    install_sublime
+    ;;
+  ghostty) install_ghostty ;;
+  helix) install_helix ;;
+  sublime|tmtheme|tm) install_sublime ;;
+  -h|--help|help)
+    echo "Usage: $0 [all|ghostty|helix|sublime]"
+    exit 0
+    ;;
+  *)
+    echo "Unknown target: $TARGET" >&2
+    echo "Usage: $0 [all|ghostty|helix|sublime]" >&2
+    exit 1
+    ;;
+esac
 
 echo
-echo "Done. Add this to your Ghostty config:"
-echo
-echo "  theme = light:GrokDay,dark:GrokNight"
-echo
-echo "Then reload the config (macOS: Cmd+Shift+,) or open a new window."
-echo
-echo "Config locations:"
-echo "  macOS:  ~/Library/Application Support/com.mitchellh.ghostty/config"
-echo "  Linux:  \${XDG_CONFIG_HOME:-~/.config}/ghostty/config"
+echo "Done. Mode: $(have_local && echo local-clone || echo remote-download)"

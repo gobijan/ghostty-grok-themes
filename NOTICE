@@ -1,0 +1,32 @@
+Grok editor/terminal themes
+===========================
+
+This repository packages Grok Build color palettes for Ghostty, Helix, and
+Sublime Text / TextMate.
+
+Upstream (color palettes and TextMate themes)
+---------------------------------------------
+
+  Project:  Grok Build (xai-org/grok-build)
+  URL:      https://github.com/xai-org/grok-build
+  License:  Apache License 2.0
+  Copyright 2023-2026 SpaceXAI
+
+  Canonical TUI palettes:
+    crates/codegen/xai-grok-pager-render/src/theme/grokday.rs
+    crates/codegen/xai-grok-pager-render/src/theme/groknight.rs
+
+  Syntax themes (copied into sublime/):
+    crates/codegen/xai-grok-pager-render/assets/grok-day.tmTheme
+    crates/codegen/xai-grok-pager-render/assets/grok-night.tmTheme
+    crates/codegen/xai-grok-pager-render/assets/tokyo-night.tmTheme
+
+Derivative works in this repository
+-----------------------------------
+
+  ghostty/   — 16-color Ghostty terminal themes mapped from the TUI palettes
+               (includes light-theme ANSI white contrast fix for external tools)
+  helix/     — Helix editor theme ports (tree-sitter scopes + UI chrome)
+
+You must comply with the Apache License 2.0 when redistributing.
+See LICENSE.

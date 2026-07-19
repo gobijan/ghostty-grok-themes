@@ -1,0 +1,157 @@
+# GrokDay — Helix theme
+# Palette from xai-org/grok-build (Apache-2.0):
+#   crates/codegen/xai-grok-pager-render/src/theme/grokday.rs
+#   crates/codegen/xai-grok-pager-render/assets/grok-day.tmTheme
+# Ported for Helix tree-sitter scopes.
+
+attribute = { fg = "purple" }
+comment = { fg = "comment", modifiers = ["italic"] }
+"comment.block.documentation" = { fg = "comment-doc" }
+"comment.line.documentation" = { fg = "comment-doc" }
+constant = { fg = "orange" }
+"constant.builtin" = { fg = "aqua" }
+"constant.character" = { fg = "green" }
+"constant.character.escape" = { fg = "blue-op" }
+constructor = { fg = "aqua" }
+function = { fg = "blue" }
+"function.builtin" = { fg = "aqua" }
+"function.macro" = { fg = "cyan" }
+"function.special" = { fg = "cyan" }
+keyword = { fg = "purple", modifiers = ["italic"] }
+"keyword.control" = { fg = "magenta" }
+"keyword.control.import" = { fg = "cyan" }
+"keyword.control.return" = { fg = "purple", modifiers = ["italic"] }
+"keyword.directive" = { fg = "cyan" }
+"keyword.function" = { fg = "magenta" }
+"keyword.operator" = { fg = "magenta" }
+label = { fg = "blue" }
+namespace = { fg = "cyan" }
+operator = { fg = "blue-op" }
+punctuation = { fg = "punctuation" }
+special = { fg = "aqua" }
+string = { fg = "green" }
+"string.regexp" = { fg = "teal" }
+"string.special" = { fg = "aqua" }
+tag = { fg = "red" }
+type = { fg = "aqua" }
+"type.builtin" = { fg = "aqua" }
+"type.enum.variant" = { fg = "orange" }
+variable = { fg = "fg" }
+"variable.builtin" = { fg = "red" }
+"variable.other.member" = { fg = "teal" }
+"variable.parameter" = { fg = "yellow", modifiers = ["italic"] }
+
+"markup.bold" = { modifiers = ["bold"] }
+"markup.heading" = { fg = "teal", modifiers = ["bold"] }
+"markup.heading.1" = { fg = "teal", modifiers = ["bold"] }
+"markup.heading.2" = { fg = "blue", modifiers = ["bold"] }
+"markup.heading.3" = { fg = "purple", modifiers = ["bold"] }
+"markup.heading.4" = { fg = "fg-secondary", modifiers = ["bold"] }
+"markup.heading.5" = { fg = "comment-doc", modifiers = ["bold"] }
+"markup.heading.6" = { fg = "comment", modifiers = ["bold"] }
+"markup.heading.completion" = { bg = "bg-menu", fg = "fg" }
+"markup.heading.hover" = { bg = "bg-focus" }
+"markup.italic" = { modifiers = ["italic"] }
+"markup.link" = { fg = "teal", underline = { style = "line" } }
+"markup.link.label" = { fg = "teal" }
+"markup.link.text" = { fg = "teal" }
+"markup.link.url" = { underline = { style = "line" } }
+"markup.list" = { fg = "orange", modifiers = ["bold"] }
+"markup.normal.completion" = { fg = "comment" }
+"markup.normal.hover" = { fg = "fg-secondary" }
+"markup.raw" = { fg = "cyan" }
+"markup.raw.inline" = { bg = "bg-menu", fg = "magenta" }
+"markup.quote" = { fg = "comment" }
+"markup.strikethrough" = { modifiers = ["crossed_out"] }
+
+"diff.delta" = { fg = "change" }
+"diff.delta.moved" = { fg = "blue" }
+"diff.minus" = { fg = "delete" }
+"diff.plus" = { fg = "add" }
+
+error = { fg = "error" }
+warning = { fg = "yellow" }
+info = { fg = "info" }
+hint = { fg = "hint" }
+"diagnostic.error" = { underline = { style = "curl", color = "error" } }
+"diagnostic.warning" = { underline = { style = "curl", color = "yellow" } }
+"diagnostic.info" = { underline = { style = "curl", color = "info" } }
+"diagnostic.hint" = { underline = { style = "curl", color = "hint" } }
+"diagnostic.unnecessary" = { modifiers = ["dim"] }
+"diagnostic.deprecated" = { modifiers = ["crossed_out"] }
+
+"ui.background" = { bg = "bg", fg = "fg" }
+"ui.background.separator" = { fg = "border" }
+"ui.cursor" = { fg = "bg", bg = "gray" }
+"ui.cursor.primary" = { fg = "bg", bg = "fg" }
+"ui.cursor.primary.normal" = { fg = "bg", bg = "magenta" }
+"ui.cursor.primary.insert" = { fg = "bg", bg = "green" }
+"ui.cursor.primary.select" = { fg = "bg", bg = "blue" }
+"ui.cursor.match" = { fg = "orange", modifiers = ["bold"] }
+"ui.cursorline.primary" = { bg = "bg-menu" }
+"ui.help" = { bg = "bg-menu", fg = "fg" }
+"ui.linenr" = { fg = "fg-gutter" }
+"ui.linenr.selected" = { fg = "fg-secondary" }
+"ui.menu" = { bg = "bg-menu", fg = "fg" }
+"ui.menu.selected" = { bg = "bg-selection", fg = "fg" }
+"ui.menu.scroll" = { fg = "magenta", bg = "bg-menu" }
+"ui.popup" = { bg = "bg-menu", fg = "fg" }
+"ui.popup.info" = { bg = "bg-menu", fg = "fg" }
+"ui.selection" = { bg = "bg-selection" }
+"ui.selection.primary" = { bg = "bg-selection" }
+"ui.statusline" = { bg = "bg-menu", fg = "fg-secondary" }
+"ui.statusline.inactive" = { bg = "bg-menu", fg = "fg-gutter" }
+"ui.statusline.normal" = { bg = "magenta", fg = "bg", modifiers = ["bold"] }
+"ui.statusline.insert" = { bg = "green", fg = "bg", modifiers = ["bold"] }
+"ui.statusline.select" = { bg = "blue", fg = "bg", modifiers = ["bold"] }
+"ui.bufferline" = { fg = "fg-gutter", bg = "bg" }
+"ui.bufferline.active" = { fg = "fg", bg = "bg-menu", modifiers = ["bold"] }
+"ui.bufferline.background" = { bg = "bg" }
+"ui.text" = { fg = "fg" }
+"ui.text.focus" = { bg = "bg-focus" }
+"ui.text.inactive" = { fg = "comment", modifiers = ["italic"] }
+"ui.text.info" = { bg = "bg-menu", fg = "fg" }
+"ui.text.directory" = { fg = "cyan" }
+"ui.virtual.ruler" = { bg = "bg-menu" }
+"ui.virtual.whitespace" = { fg = "fg-gutter" }
+"ui.virtual.indent-guide" = { fg = "fg-gutter" }
+"ui.virtual.inlay-hint" = { bg = "bg-inlay", fg = "teal" }
+"ui.virtual.jump-label" = { fg = "orange", modifiers = ["bold"] }
+"ui.window" = { fg = "border" }
+
+[palette]
+# Syntax (from Grok Day tmTheme)
+red = "#cd3048"
+orange = "#c3691e"
+yellow = "#a27612"
+green = "#378e23"
+teal = "#0c947c"
+aqua = "#0f87a2"
+blue-op = "#5580a8"
+cyan = "#0082aa"
+blue = "#2f64d2"
+purple = "#6c3eb2"
+magenta = "#7d4bc6"
+punctuation = "#4a72b0"
+comment = "#909090"
+comment-doc = "#808080"
+
+# Diff / diagnostics
+add = "#0a8e70"
+change = "#3a5fa0"
+delete = "#af2323"
+error = "#af2323"
+info = "#0f87a2"
+hint = "#0a8e70"
+
+# UI (from Grok 0.2.101 TUI palette)
+fg = "#262626"
+fg-secondary = "#444444"
+fg-gutter = "#767676"
+gray = "#626262"
+border = "#b9b9be"
+bg = "#f5f5f5"
+bg-menu = "#eaeaea"
+bg-selection = "#d4d4d8"
+bg-focus = "#dedede"
+bg-inlay = "#eaeaea"
