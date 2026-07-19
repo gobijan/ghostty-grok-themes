@@ -59,11 +59,12 @@ install_helix() {
   fetch_file helix/grok-night.toml "$d/grok-night.toml"
   echo "    $d"
   echo
-  echo "  Enable:"
-  echo "    :theme grok-night"
-  echo "    :theme grok-day"
-  echo "  Or in ~/.config/helix/config.toml:"
-  echo "    theme = \"grok-night\""
+  echo "  Enable in ~/.config/helix/config.toml (follows system appearance):"
+  echo "    [theme]"
+  echo "    dark = \"grok-night\""
+  echo "    light = \"grok-day\""
+  echo "  Or fixed: theme = \"grok-night\""
+  echo "  Or interactively: :theme grok-night / :theme grok-day"
 }
 
 install_sublime() {

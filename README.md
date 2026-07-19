@@ -83,14 +83,23 @@ Reload with **Cmd+Shift+,** or a new window. Check: `ghostty +list-themes | grep
 
 ### Helix
 
+Follow system light/dark appearance (recommended):
+
 ```toml
 # ~/.config/helix/config.toml
+[theme]
+dark = "grok-night"
+light = "grok-day"
+```
+
+Or a single fixed theme:
+
+```toml
 theme = "grok-night"
 # theme = "grok-day"
 ```
 
 Or `:theme grok-night` / `:theme grok-day` interactively.
-
 ### Sublime Text
 
 After install, **Preferences → Select Color Scheme** → `grok-night`, `grok-day`, or `tokyo-night`.
